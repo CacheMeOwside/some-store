@@ -1,9 +1,21 @@
-- name: Setup Pressto Base
-  run: |
-    mkdir -p ~/.ssh
-    echo "${{ secrets.PRESSTO_BASE_SSH_KEY }}" > ~/.ssh/id_rsa
-    chmod 600 ~/.ssh/id_rsa
-    ssh-keyscan github.com >> ~/.ssh/known_hosts
+name: Some Site Build
 
-- name: Clone Pressto Base
-  run: git clone --branch main git@github.com:10up/pressto-base.git
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup Pressto Base
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.PRESSTO_BASE_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - name: Clone Pressto Base
+        run: git clone --branch main git@github.com:10up/pressto-base.git
