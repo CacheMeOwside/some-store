@@ -34,7 +34,7 @@ jobs:
 
       - name: Configure Composer Github Token
         run: |
-          composer config -g github-oauth.github.com ${{ secrets.PAT_GITHUB }}
+          composer config -g github-oauth.github.com ${{ secrets.PAT }}
 
       - name: Install PHP deps
         run: |
