@@ -32,6 +32,10 @@ jobs:
       - name: Clone Pressto Base
         run: git clone --branch main git@github.com:10up/pressto-base.git
 
+      - name: Configure Composer Github Token
+        run: |
+          composer config -g github-oauth.github.com ${{ secrets.PAT_GITHUB }}
+
       - name: Install PHP deps
         run: |
           cd pressto-base
