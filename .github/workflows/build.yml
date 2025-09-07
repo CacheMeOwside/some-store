@@ -10,6 +10,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Setup PHP
+        uses: shivamathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer:v2
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: false
+          fetch-depth: 0
+
       - name: Setup Pressto Base
         run: |
           mkdir -p ~/.ssh
@@ -18,7 +30,12 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
 
       - name: Clone Pressto Base
-        run: git clone --branch main git@github.com:10up/pressto-base.git .
+        run: git clone --branch main git@github.com:10up/pressto-base.git
+
+      - name: Install PHP deps
+        run: |
+          cd pressto-base
+          composer install --no-interaction --no-dev
 
       - name: List files
         run: ls -l
